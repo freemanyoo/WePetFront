@@ -49,24 +49,24 @@ const UserManagementPage = () => {
             ) : (
                 <table>
                     <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>로그인 ID</th>
-                            <th>이름</th>
-                            <th>이메일</th>
-                            <th>역할</th>
-                        </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>로그인 ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>역할</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr key={user.userId}>
-                                <td>{user.userId}</td>
-                                <td>{user.loginId}</td>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.role}</td>
-                            </tr>
-                        ))}
+                    {users.map((user) => (
+                        <tr key={user.userId}>
+                            <td>{user.userId}</td>
+                            <td>{user.loginId}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role}</td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             )}
