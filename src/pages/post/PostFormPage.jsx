@@ -54,14 +54,27 @@ const PostFormPage = () => {
                 try {
                     const response = await getPostById(postId);
                     const postData = response.data;
+
+                    // ✅ [문제 해결] 백엔드에서 받은 한글 성별을 프론트엔드 value(영문)로 변환합니다.
+                    const genderMapToValue = {
+                        "수컷": "MALE",
+                        "암컷": "FEMALE",
+                        "모름": "UNKNOWN"
+                    };
+                    const genderValue = genderMapToValue[postData.gender] || 'UNKNOWN';
+
+
                     const formattedLostTime = postData.lostTime
                         ? new Date(new Date(postData.lostTime).getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)
                         : '';
-                    setFormData({ ...postData, gender: postData.gender || 'UNKNOWN', lostTime: formattedLostTime });
+                    // ✅ 변환된 genderValue를 formData 상태에 저장합니다.
+                    setFormData({ ...postData, gender: genderValue, lostTime: formattedLostTime });
+
                     if (postData.imageUrls) {
-                        const imagesWithIds = postData.imageUrls.map((url, index) => ({ id: index + 1, url: url }));
+                        const imagesWithIds = postData.imageUrls.map((url, index) => ({ id: index + 1, url: `http://localhost:8080/upload/${url}` }));
                         setExistingImages(imagesWithIds);
                     }
+
                 } catch (err) {
                     setError('게시글 정보를 불러오는 데 실패했습니다.');
                 } finally {
