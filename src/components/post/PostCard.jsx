@@ -16,7 +16,7 @@ const PostCard = ({ post }) => {
         return <div className="status-badge status-active">{post.postType === 'MISSING' ? '찾는 중' : '보호 중'}</div>;
     };
 
-    // 추가: 날짜, 성별, 품종, 지역 정보를 변수로 준비
+    // ✅ 추가된 정보 변수 정의
     const lostDate = post.lostTime ? new Date(post.lostTime).toLocaleDateString() : '날짜 미상';
     const genderText = post.gender === 'MALE' ? '수컷' : post.gender === 'FEMALE' ? '암컷' : '성별 모름';
     const breedText = post.animalBreed || '품종 모름';
@@ -37,7 +37,7 @@ const PostCard = ({ post }) => {
                         <span>{typeText} · {post.author.name}</span>
                     </div>
                 </div>
-                {/* 추가된 정보 필드 */}
+                {/* ✅ 추가된 정보 필드 */}
                 <div className="post-details">
                     <p>
                         <i className="fas fa-calendar-alt"></i>&nbsp;
