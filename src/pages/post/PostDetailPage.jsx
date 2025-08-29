@@ -14,13 +14,13 @@ const PostDetailPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // ✅ 데이터 로딩 로직은 원래 코드를 그대로 유지하여 문제를 해결합니다.
     const fetchPost = async () => {
         setLoading(true);
         setError(null);
         try {
             const response = await getPostById(postId);
-            setPost(response.data); //  <-- 이 부분을 원래대로 유지합니다.
+            // API 응답 구조가 { success: true, data: {...} } 형태일 수 있으므로 .data를 추가
+            setPost(response.data);
         } catch (err) {
             setError("게시글을 불러오지 못했습니다.");
         } finally {
@@ -29,11 +29,12 @@ const PostDetailPage = () => {
     };
 
     useEffect(() => {
-        if (postId) { // postId가 있을 때만 API를 호출합니다.
+        if (postId) {
             fetchPost();
         }
     }, [postId]);
 
+    // ... (handleDelete, handleComplete 등 다른 함수들은 모두 그대로 유지됩니다) ...
     const handleDelete = async () => {
         if (window.confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
             try {
@@ -46,8 +47,6 @@ const PostDetailPage = () => {
         }
     };
 
-    // ✅ '찾기 완료' 관련 텍스트를 동적으로 결정하기 위한 변수들입니다.
-    // post 데이터가 로드된 후에만 접근하도록 'post?' 옵셔널 체이닝을 사용합니다.
     const isMissingBoard = post?.postType === 'MISSING';
     const completeButtonText = isMissingBoard ? "찾았어요!" : "가족 찾음!";
     const confirmCompleteMessage = isMissingBoard
@@ -56,37 +55,37 @@ const PostDetailPage = () => {
     const alertCompleteMessage = isMissingBoard ? '"찾았어요!" 처리가 완료되었습니다.' : '"가족 찾음!" 처리가 완료되었습니다.';
 
     const handleComplete = async () => {
-        // ✅ 위에서 정의한 동적 확인 메시지를 사용합니다.
         if (window.confirm(confirmCompleteMessage)) {
             try {
                 await completePost(postId);
-                // ✅ 위에서 정의한 동적 성공 메시지를 사용합니다.
                 alert(alertCompleteMessage);
-                fetchPost(); // 상태를 다시 불러와 UI를 갱신합니다.
+                fetchPost();
             } catch (err) {
                 alert('상태 변경에 실패했습니다.');
             }
         }
     };
 
+
     if (loading) return <div>게시글을 불러오는 중...</div>;
     if (error) return <div className="error-message">{error}</div>;
     if (!post) return <div>해당 게시글이 없습니다.</div>;
 
     const isAuthor = isLoggedIn && user?.userId === post.author.userId;
-    const fullImageUrls = post.imageUrls?.map(url => `http://localhost:8080/upload/${url}`) || [];
+
+    // ✅ [핵심 수정] 새로운 데이터 구조(post.images)에 맞게 이미지 URL 목록을 생성합니다.
+    const fullImageUrls = post.images?.map(img => `http://localhost:8080/upload/${img.imageUrl}`) || [];
 
     const isCompleted = post.status === 'COMPLETED';
-
     const statusText = isCompleted
         ? (post.postType === 'MISSING' ? '찾았어요!' : '가족 찾음!')
         : (post.postType === 'MISSING' ? '찾는 중' : '보호 중');
-
     const statusClassName = isCompleted ? 'status-completed' : 'status-active';
 
     return (
         <section className="board-section">
             <div className="post-detail">
+                {/* ... (Header 부분은 변경 없습니다) ... */}
                 <div className="post-detail-header">
                     <div className={`status-badge ${statusClassName}`}>
                         {statusText}
@@ -102,7 +101,6 @@ const PostDetailPage = () => {
                                 <>
                                     <Link to={`/posts/${postId}/edit`} className="btn btn-outline">수정</Link>
                                     <button onClick={handleDelete} className="btn btn-danger">삭제</button>
-                                    {/* ✅ 버튼 텍스트를 동적 변수로 교체합니다. */}
                                     <button onClick={handleComplete} className="btn btn-success">{completeButtonText}</button>
                                 </>
                             )}
@@ -112,12 +110,13 @@ const PostDetailPage = () => {
 
                 <div className="post-detail-content">
                     <div className="post-image-gallery">
+                        {/* ✅ 이 부분은 이제 정상적으로 fullImageUrls 배열을 받아 이미지를 렌더링합니다. */}
                         {fullImageUrls.length > 0 ? fullImageUrls.map((fullUrl, index) => (
                             <img key={index} src={fullUrl} alt={`post image ${index}`} className="gallery-image" />
                         )) : <div className="no-image-placeholder">등록된 이미지가 없습니다.</div>}
                     </div>
 
-                    {/* 이하 동물 정보, 지도, 본문 내용은 변경 없습니다. */}
+                    {/* ... (이하 동물 정보, 지도, 본문, 목록가기 버튼, 댓글 등은 변경 없습니다) ... */}
                     <div className="animal-detail-info">
                         <h3>동물 정보</h3>
                         <div className="info-grid">
@@ -138,18 +137,15 @@ const PostDetailPage = () => {
                         />
                     </div>
                     <div className="post-main-content">
-                        {/* pre-wrap을 사용하면 줄바꿈과 공백이 그대로 표시됩니다. */}
                         <p style={{ whiteSpace: 'pre-wrap' }}>{post.content}</p>
                     </div>
                 </div>
-
 
                 <div className="list-button-container">
                     <Link to={`/board/${post.postType.toLowerCase()}`} className="btn-list">
                         ← 목록가기
                     </Link>
                 </div>
-
 
                 <CommentComponent postId={postId} isPostCompleted={isCompleted} />
             </div>
