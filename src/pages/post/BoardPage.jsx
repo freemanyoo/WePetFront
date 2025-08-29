@@ -46,15 +46,18 @@ const BoardPage = () => {
             setLoading(true);
             setError(null);
             try {
+                // ✅ 핵심: searchCriteria의 모든 값을 params 객체로 복사하고,
+                // 백엔드 필드명에 맞게 변환합니다.
                 const params = {
                     // 이름(Key) 변환
                     title: searchCriteria.title,
-                    animalName: searchCriteria.author,
+                    authorName: searchCriteria.author,
                     location: searchCriteria.location,
                     animalCategory: searchCriteria.animalType,
                     animalBreed: searchCriteria.breed,
+                    gender: searchCriteria.gender, // 👈 성별(gender) 파라미터 추가
 
-                    // ✅ [핵심 수정] 날짜 형식에 시간 정보를 추가합니다.
+                    // 날짜 형식 변환
                     lostTimeFrom: searchCriteria.lostDateFrom ? `${searchCriteria.lostDateFrom}T00:00:00` : null,
                     lostTimeTo: searchCriteria.lostDateTo ? `${searchCriteria.lostDateTo}T23:59:59` : null,
 
@@ -62,7 +65,7 @@ const BoardPage = () => {
                     status: searchCriteria.isFound === true ? 'COMPLETED' :
                         searchCriteria.isFound === false ? 'ACTIVE' : null,
 
-                    // 기존 페이징 및 타입 파라미터
+                    // 기본 페이징 및 타입 파라미터
                     postType: (type || '').toUpperCase(),
                     page: pageInfo.currentPage - 1,
                     size: 9
