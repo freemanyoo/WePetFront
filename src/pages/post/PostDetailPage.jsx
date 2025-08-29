@@ -143,6 +143,14 @@ const PostDetailPage = () => {
                     </div>
                 </div>
 
+
+                <div className="list-button-container">
+                    <Link to={`/board/${post.postType.toLowerCase()}`} className="btn-list">
+                        ← 목록가기
+                    </Link>
+                </div>
+
+
                 <CommentComponent postId={postId} isPostCompleted={isCompleted} />
             </div>
         </section>

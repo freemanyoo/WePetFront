@@ -157,6 +157,26 @@
     border-color: #c82333;
 }
 
+.list-button-container {
+    display: flex; /* 내부 아이템(버튼) 정렬을 위해 flex 사용 */
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    padding: 0 2.5rem 2rem 2.5rem; /* 좌우는 다른 content와 맞추고, 댓글(아래)과 여백을 줌 */
+}
+
+/* 목록가기 버튼 자체의 디자인 */
+.btn-list {
+    background-color: #f1f3f5; /* 밝은 회색 배경 */
+    color: #495057; /* 어두운 회색 텍스트 */
+    padding: 0.6rem 1.2rem; /* 다른 버튼보다 살짝 작게 */
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-list:hover {
+    background-color: #e9ecef; /* 마우스를 올리면 살짝 더 어두운 회색 */
+}
 
 
 /* ====================================
