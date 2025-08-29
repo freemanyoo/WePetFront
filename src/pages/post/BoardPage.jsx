@@ -38,7 +38,6 @@ const BoardPage = () => {
     // 5. API를 호출하는 핵심 로직
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        // type 값이 URL 파라미터에서 확정되기 전에 API가 호출되는 것을 방지합니다.
         if (!type) {
             return;
         }
@@ -47,39 +46,37 @@ const BoardPage = () => {
             setLoading(true);
             setError(null);
             try {
-                // 백엔드 DTO(FindPetSearchCriteria) 필드명에 맞게 파라미터를 매핑합니다.
                 const params = {
-                    // 1. 이름(Key) 변환
+                    // 이름(Key) 변환
                     title: searchCriteria.title,
-                    animalName: searchCriteria.author,       // author -> animalName
+                    animalName: searchCriteria.author,
                     location: searchCriteria.location,
-                    animalCategory: searchCriteria.animalType, // animalType -> animalCategory
+                    animalCategory: searchCriteria.animalType,
                     animalBreed: searchCriteria.breed,
-                    lostTimeFrom: searchCriteria.lostDateFrom, // lostDateFrom -> lostTimeFrom
-                    lostTimeTo: searchCriteria.lostDateTo,     // lostDateTo -> lostTimeTo
 
-                    // 2. 값(Value) 변환
-                    // isFound (true/false/null) -> status ("COMPLETED"/"ACTIVE"/null)
+                    // ✅ [핵심 수정] 날짜 형식에 시간 정보를 추가합니다.
+                    lostTimeFrom: searchCriteria.lostDateFrom ? `${searchCriteria.lostDateFrom}T00:00:00` : null,
+                    lostTimeTo: searchCriteria.lostDateTo ? `${searchCriteria.lostDateTo}T23:59:59` : null,
+
+                    // 값(Value) 변환
                     status: searchCriteria.isFound === true ? 'COMPLETED' :
                         searchCriteria.isFound === false ? 'ACTIVE' : null,
 
-                    // 3. 기존 페이징 및 타입 파라미터
+                    // 기존 페이징 및 타입 파라미터
                     postType: (type || '').toUpperCase(),
-                    page: pageInfo.currentPage - 1, // API는 0-based 페이지를 사용하므로 -1
+                    page: pageInfo.currentPage - 1,
                     size: 9
                 };
 
-                // 백엔드로 보내기 전, 내용이 없는 파라미터는 제거하여 URL을 깔끔하게 합니다.
+                // 내용이 없는 파라미터는 API 요청 URL에서 제외합니다.
                 Object.keys(params).forEach(key => {
                     if (params[key] === null || params[key] === undefined || params[key] === '') {
                         delete params[key];
                     }
                 });
 
-                // API를 호출합니다.
                 const response = await getPosts(params);
 
-                // 응답 결과를 state에 저장합니다.
                 setPosts(response.data.dtoList);
                 setPageInfo({
                     currentPage: response.data.page,
@@ -95,7 +92,7 @@ const BoardPage = () => {
         };
 
         fetchPosts();
-    }, [type, pageInfo.currentPage, searchCriteria]); // 이 값들이 변경될 때마다 API를 다시 호출합니다.
+    }, [type, pageInfo.currentPage, searchCriteria]);
 
     return (
         <section className="board-section">
