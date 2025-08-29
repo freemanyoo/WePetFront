@@ -30,13 +30,13 @@ const HomePage = () => {
                 </p>
                 <div className="home-buttons">
                     <Link to="/board/missing" className="home-btn">
-                        <i className="fas fa-search"></i>
-                        가족을 찾아요
+                        <i className="fas fa-search">가족을 찾아요</i>
+
                         <small>실종된 우리 가족을 찾고 있어요</small>
                     </Link>
                     <Link to="/board/shelter" className="home-btn">
-                        <i className="fas fa-heart"></i>
-                        주인을 기다려요
+                        <i className="fas fa-heart">주인을 기다려요</i>
+
                         <small>주인을 찾아주고 있어요</small>
                     </Link>
                 </div>
