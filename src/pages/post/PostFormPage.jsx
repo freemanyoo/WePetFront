@@ -70,9 +70,12 @@ const PostFormPage = () => {
                     // ✅ 변환된 genderValue를 formData 상태에 저장합니다.
                     setFormData({ ...postData, gender: genderValue, lostTime: formattedLostTime });
 
-                    if (postData.imageUrls) {
-                        const imagesWithIds = postData.imageUrls.map((url, index) => ({ id: index + 1, url: `http://localhost:8080/upload/${url}` }));
-                        setExistingImages(imagesWithIds);
+                    if (postData.images) {
+                        const imagesWithRealIds = postData.images.map(img => ({
+                            id: img.imageId, // 가짜 id(index) 대신 실제 imageId 사용
+                            url: `http://localhost:8080/upload/${img.imageUrl}`
+                        }));
+                        setExistingImages(imagesWithRealIds);
                     }
 
                 } catch (err) {
