@@ -16,7 +16,7 @@ const Header = () => {
       <div className="header-container">
         <Link to="/" className="logo">
           <i className="fas fa-paw"></i>
-          찾아줘요
+            WePet
         </Link>
         <nav className="nav-buttons">
           {isLoggedIn ? (

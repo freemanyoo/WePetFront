@@ -497,7 +497,9 @@
     color: #667eea;
     margin-bottom: 1rem;
 }
-
+.user-name {
+    color: black
+}
 /* Login/Register Modal */
 .modal {
     display: none;

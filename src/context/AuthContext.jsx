@@ -31,6 +31,14 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   // Modify login to accept user object
+  /**
+   * @설명 사용자 로그인 상태 설정 및 로컬 스토리지 업데이트
+   * @기능 백엔드로부터 받은 사용자 데이터(로그인 ID, 이름, 역할 등)를 기반으로
+   *       애플리케이션의 전역 로그인 상태를 `true`로 설정하고,
+   *       사용자 역할 및 전체 사용자 객체를 업데이트합니다.
+   *       이 정보는 `localStorage`에 저장되어 페이지 새로고침 시에도 유지됩니다.
+   * @파라미터 userData - 백엔드 로그인 API 응답에서 받은 사용자 정보 객체
+   */
   const login = (userData) => { // userData will be the full user object from backend
     setIsLoggedIn(true);
     setUserRole(userData.role);
