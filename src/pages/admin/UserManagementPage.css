@@ -1,0 +1,34 @@
+
+.user-management-page {
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+
+.page-title {
+    margin-bottom: 2rem;
+    color: #343a40;
+    font-weight: bold;
+}
+
+.table-card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.admin-table {
+    margin-bottom: 0;
+}
+
+.admin-table th {
+    background-color: #e9ecef;
+    border-bottom-width: 2px;
+    font-weight: bold;
+}
+
+.pagination-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}

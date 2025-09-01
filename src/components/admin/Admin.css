@@ -1,0 +1,148 @@
+/* Admin Layout Styles */
+.admin-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.admin-nav {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    background-color: #f8f9fa;
+}
+
+.admin-nav-title {
+    margin-right: auto;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333; /* Added color for consistency */
+}
+
+.admin-nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-nav li {
+    margin-left: 20px;
+}
+
+.admin-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.admin-main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Post Management Page Styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th, .admin-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.admin-table button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.admin-table button:hover {
+    background-color: #e9ecef;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal.active {
+    display: block;
+    animation: fadeIn 0.3s ease-out forwards; /* Added animation */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    color: #333; /* Text color for modal content */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Added shadow */
+    border-radius: 8px; /* Added border-radius */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Pagination Styles */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination span {
+    margin: 0 10px;
+}
+
+/* Table Container for sizing */
+.admin-table-container {
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
