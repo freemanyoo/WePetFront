@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, user, logout } = useAuth(); // Use isLoggedIn and user
+  const { isLoggedIn, user, logout, userRole } = useAuth(); // Add userRole
 
   const handleLogout = () => {
     logout();
@@ -26,6 +26,12 @@ const Header = () => {
                 <i className="fas fa-user"></i>
                 마이페이지
               </Link>
+              {userRole === 'ADMIN' && (
+                <Link to="/admin" className="btn btn-danger">
+                  <i className="fas fa-cogs"></i>
+                  관리자 페이지
+                </Link>
+              )}
               <button onClick={handleLogout} className="btn btn-primary">
                 <i className="fas fa-sign-out-alt"></i>
                 로그아웃

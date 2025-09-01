@@ -43,3 +43,10 @@ body {
 .hidden {
     display: none;
 }
+
+/* Admin Page Body Style Override */
+body.admin-page-active {
+    background-image: none;
+    background-color: #ffffff;
+    color: #333333;
+}
