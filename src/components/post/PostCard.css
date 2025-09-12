@@ -31,7 +31,9 @@
 .post-card .post-content {
     padding: 1.5rem;
 }
-
+.post-details {
+    color:black;
+}
 .post-card .post-title {
     font-size: 1.3rem;
     font-weight: 700;

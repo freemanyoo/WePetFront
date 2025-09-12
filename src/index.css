@@ -7,9 +7,14 @@
 
 body {
     font-family: 'Segoe UI', Taebaek, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     line-height: 1.6;
+    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 /* Animations */
@@ -37,4 +42,11 @@ body {
 
 .hidden {
     display: none;
+}
+
+/* Admin Page Body Style Override */
+body.admin-page-active {
+    background-image: none;
+    background-color: #ffffff;
+    color: #333333;
 }
